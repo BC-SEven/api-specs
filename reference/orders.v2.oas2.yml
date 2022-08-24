@@ -462,6 +462,24 @@ paths:
                     country: United States
                     country_iso2: US
                     email: janedoe@example.com
+              Download consignment:
+                value:
+                  customer_id: 11
+                  consignments:
+                    downloads:
+                      - line_items:
+                        product_id: 184
+                        quantity: 3
+                  billing_address:
+                    first_name: Jane
+                    last_name: Doe
+                    street_1: 123 Main Street
+                    city: Austin
+                    state: Texas
+                    zip: '78751'
+                    country: United States
+                    country_iso2: US
+                    email: janedoe@example.com
         required: true
       responses:
         '200':
@@ -4978,6 +4996,24 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/giftCertificateConsignment_Get'
+    digitalConsignment_Post:
+      allOf:
+        - type: object
+          properties:
+            line_items:
+              required: true
+              type: array
+              minItems: 1
+              items:
+                type: array
+                items:
+                  anyOf:
+                    - $ref: '#/components/schemas/orderCatalogProduct_Post'
+      x-examples:
+        x-example-1:
+          line_items:
+            - url: https://api.bigcommerce.com/stores/{$$.env.store_hash}/v2/orders/129/products/12
+              resource: /orders/129/products/12
     shippingConsignment_Post:
       allOf:
         - $ref: '#/components/schemas/shippingConsignment_Base'
@@ -5044,8 +5080,12 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/shippingConsignment_Post'
-      required:
-        - shipping
+        downloads:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/digitalConsignment_Post'
     orderConsignments_Resource:
       title: orderConsignments_Resource
       description: URL of the shipping consignment for api requests.
