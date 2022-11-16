@@ -225,9 +225,9 @@ paths:
                   consignments:
                     email:
                       gift_certificates:
-                          - recipient_email: "john.doe@bigcommerce.com"
+                          - recipient_email: "janedoe@bigcommerce.com"
                             line_items:
-                              - gift_certificate_id: 123,
+                              - gift_certificate_id: 123
                               - quantitiy: 0
         required: true
       responses:
